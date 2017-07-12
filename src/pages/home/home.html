@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list inset>
+    <ion-item>
+      <ion-label>Nombre Usuario</ion-label>
+      <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button block (click)="getRepos()">Buscar</button>
+  </div>
+  <ion-card *ngFor="let repo of foundRepos" (click)="goToDetails(repo)">
+    <ion-card-header>
+      {{ repo.name }}
+    </ion-card-header>
+    <ion-card-content>
+      {{ repo.description }}
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
