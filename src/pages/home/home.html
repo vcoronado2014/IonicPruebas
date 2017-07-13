@@ -14,7 +14,7 @@
     </ion-item>
   </ion-list>
   <div padding>
-    <button block (click)="getRepos()">Buscar</button>
+    <button ion-button color="secondary" block (click)="getRepos()">Buscar</button>
   </div>
   <ion-card *ngFor="let repo of foundRepos" (click)="goToDetails(repo)">
     <ion-card-header>

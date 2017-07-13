@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { GitHubService } from '../../app/services/github';
 import { DetailsPage } from '../../pages/details/details';
+import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-home',
