@@ -12,7 +12,68 @@
 
 </ion-header>
 
+<ion-content class="login-content" padding>
+  <ion-row class="logo-row">
+    <!--
+    <ion-col></ion-col>
+    -->
+    <ion-col width-67>
+      <img src="http://placehold.it/400x200"/>
+    </ion-col>
+    <!--
+    <ion-col></ion-col>
+    -->
+  </ion-row>
 
-<ion-content padding>
+  <div class="login-box">
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
+
+          <ion-item>
+            <ion-input type="text"[(ngModel)]="usuario" placeholder="Usuario" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="password"[(ngModel)]="password" placeholder="Password"></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="signup-col">
+        <button ion-button color="secondary" block (click)="Signup()">Ingresar</button>
+
+      </ion-col>
+    </ion-row>
+  </div>
+
 
 </ion-content>
+<!--
+<ion-content padding>
+  <ion-card center>
+    <ion-card-header>
+      Datos del Usuario
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label fixed>Usuario:</ion-label>
+          <ion-input type="text"[(ngModel)]="usuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>Passoword:</ion-label>
+          <ion-input type="text"[(ngModel)]="password"></ion-input>
+        </ion-item>
+      </ion-list>
+      <div padding>
+        <button ion-button color="secondary" block (click)="Signup()">Ingresar</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+-->
