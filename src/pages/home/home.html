@@ -1,12 +1,23 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+
+<ion-header color="green-500">
+  <ion-navbar color="green-500">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Inicio</ion-title>
+    <!--
+      <ion-icon name="close-circle" float-right (click)="logout()"></ion-icon>
+    -->
+
   </ion-navbar>
 </ion-header>
 
+
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="logout()"><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
   <ion-list inset>
     <ion-item>
       <ion-label>Nombre Usuario</ion-label>

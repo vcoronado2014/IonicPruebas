@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { GitHubService } from '../../app/services/github';
+import { AuthService } from '../../app/services/AuthService';
 import { DetailsPage } from '../../pages/details/details';
 import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService]
+  providers: [GitHubService, AuthService]
 })
 export class HomePage {
   public foundRepos;
@@ -16,7 +17,8 @@ export class HomePage {
 
   constructor(
     private github: GitHubService,
-    private nav: NavController
+    private auth: AuthService,
+    public navCtrl: NavController
   ){
       this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
   }
@@ -31,7 +33,12 @@ export class HomePage {
   }
 
   goToDetails(repo){
-    this.nav.push(DetailsPage, {repo: repo });
+    this.navCtrl.push(DetailsPage, {repo: repo });
+  }
+
+  logout(){
+    this.auth.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

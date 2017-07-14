@@ -60,18 +60,7 @@ export class AuthService{
   }
   logout(): void  {
     sessionStorage.clear();
-    /*
-    localStorage.removeItem('USU_ID');
-    localStorage.removeItem('ROL_ID');
-    localStorage.removeItem('ROL_NOMBRE');
-    localStorage.removeItem('INST_ID');
-    localStorage.removeItem('INSTITUCION_NOMBRE');
-    localStorage.removeItem('PERSONA_NOMBRE');
-    localStorage.removeItem('REG_ID');
-    localStorage.removeItem('REG_NOMBRE');
-    localStorage.removeItem('COM_ID');
-    localStorage.removeItem('COM_NOMBRE');
-    */
+
     this.username = '';
     this.loggedIn = false;
   }
@@ -79,16 +68,4 @@ export class AuthService{
     return this.loggedIn;
   }
 
-
-  /*
-  getRepos(username){
-    let repos = this.http.get("https://api.github.com/users/" + username + "/repos");
-    return repos;
-  }
-  getDetails(repo){
-    let headers = new Headers();
-    headers.append('Accept', 'application/vnd.github.VERSION.html');
-    return this.http.get(repo.url + '/readme', { headers: headers });
-  }
-  */
 }
