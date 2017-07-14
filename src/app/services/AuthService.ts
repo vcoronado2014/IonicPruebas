@@ -39,16 +39,16 @@ export class AuthService{
             //vamos a dividir el retorno
             let retorno = JSON.parse(res);
 
-            localStorage.setItem('USU_ID', retorno.AutentificacionUsuario.Id);
-            localStorage.setItem('ROL_ID', retorno.Rol.Id);
-            localStorage.setItem('ROL_NOMBRE', retorno.Rol.Nombre);
-            localStorage.setItem('INST_ID', retorno.Institucion.Id);
-            localStorage.setItem('INSTITUCION_NOMBRE', retorno.Institucion.Nombre);
-            localStorage.setItem('PERSONA_NOMBRE', retorno.Persona.Nombres + ' ' + retorno.Persona.ApellidoPaterno + ' ' + retorno.Persona.ApellidoMaterno);
-            localStorage.setItem('REG_ID', retorno.Region.Id);
-            localStorage.setItem('REG_NOMBRE', retorno.Region.Nombre);
-            localStorage.setItem('COM_ID', retorno.Comuna.Id);
-            localStorage.setItem('COM_NOMBRE', retorno.Comuna.Nombre);
+            sessionStorage.setItem('USU_ID', retorno.AutentificacionUsuario.Id);
+            sessionStorage.setItem('ROL_ID', retorno.Rol.Id);
+            sessionStorage.setItem('ROL_NOMBRE', retorno.Rol.Nombre);
+            sessionStorage.setItem('INST_ID', retorno.Institucion.Id);
+            sessionStorage.setItem('INSTITUCION_NOMBRE', retorno.Institucion.Nombre);
+            sessionStorage.setItem('PERSONA_NOMBRE', retorno.Persona.Nombres + ' ' + retorno.Persona.ApellidoPaterno + ' ' + retorno.Persona.ApellidoMaterno);
+            sessionStorage.setItem('REG_ID', retorno.Region.Id);
+            sessionStorage.setItem('REG_NOMBRE', retorno.Region.Nombre);
+            sessionStorage.setItem('COM_ID', retorno.Comuna.Id);
+            sessionStorage.setItem('COM_NOMBRE', retorno.Comuna.Nombre);
 
             this.username = userInfo.usuario;
             this.loggedIn = true;
@@ -59,6 +59,8 @@ export class AuthService{
 
   }
   logout(): void  {
+    sessionStorage.clear();
+    /*
     localStorage.removeItem('USU_ID');
     localStorage.removeItem('ROL_ID');
     localStorage.removeItem('ROL_NOMBRE');
@@ -69,6 +71,7 @@ export class AuthService{
     localStorage.removeItem('REG_NOMBRE');
     localStorage.removeItem('COM_ID');
     localStorage.removeItem('COM_NOMBRE');
+    */
     this.username = '';
     this.loggedIn = false;
   }

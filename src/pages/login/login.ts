@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, Toast} from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 import { AuthService } from '../../app/services/AuthService';
 import {HomePage} from "../home/home";
 
@@ -21,25 +22,56 @@ export class LoginPage {
 
   constructor(
     private nav: NavController,
-    private auth: AuthService
+    private auth: AuthService,
+    public toastCtrl: ToastController
   ) {
   }
+  presentToast = function(mensaje, posicion, duracion) {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: duracion,
+      position: posicion
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
   Signup(){
-    //console.log('login');
+    //validaciones
+    if (!this.usuario){
+      let mi = this.presentToast('Nombre de usuario requerido', 'bottom', 4000);
+      return;
+    }
+    if (!this.password){
+      let mi = this.presentToast('Password requerida', 'bottom', 4000);
+      return;
+    }
     let f = { usuario: this.usuario, password: this.password };
     this.auth.login(f)
       .subscribe(
         rs => this.isLogged = rs,
-        er => console.log(er),
+        er => {
+          //console.log(error)
+          let mi = this.presentToast('Usuario no exite', 'bottom', 4000);
+
+        },
         () => {
           if (this.isLogged){
             this.nav.setRoot(HomePage)
               .then(data => console.log(data),
-              error => console.log(error)
+              error => {
+                //console.log(error)
+                let mi = this.presentToast(error, 'bottom', 4000);
+              }
               );
           } else {
             //incorrecto
             console.log('Acceso denegado');
+            let mi = this.presentToast('Usuario no exite', 'bottom', 4000);
           }
 
         }

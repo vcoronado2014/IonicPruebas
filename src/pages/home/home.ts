@@ -12,12 +12,13 @@ import { LoginPage } from '../../pages/login/login';
 export class HomePage {
   public foundRepos;
   public username;
+  public nombreUsuario: string;
 
   constructor(
     private github: GitHubService,
     private nav: NavController
   ){
-
+      this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
   }
   getRepos() {
     this.github.getRepos(this.username).subscribe(
