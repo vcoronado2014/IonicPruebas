@@ -17,24 +17,37 @@
   <ion-fab top right edge>
     <button ion-fab mini (click)="logout()"><ion-icon name="close"></ion-icon></button>
   </ion-fab>
+  <!-- cantidad usuarios -->
+  <ion-item>
+    <ion-icon name="people" item-start></ion-icon>
+    Usuarios
+    <ion-badge item-end>{{ countUsuarios }}</ion-badge>
+  </ion-item>
+  <!-- cantidad instituciones -->
+  <ion-item>
+    <ion-icon name="home" item-start></ion-icon>
+    Instituciones
+    <ion-badge item-end>{{ countInstituciones }}</ion-badge>
+  </ion-item>
+  <!-- ingresos -->
+  <ion-item>
+    <ion-icon name="logo-usd" color="secondary" item-start></ion-icon>
+    Total Ingresos
+    <ion-badge color="secondary" style="font-size: medium;" item-end>{{ '$ ' + FormatMiles(countIngresos) }}</ion-badge>
+  </ion-item>
+  <!-- egresos -->
+  <ion-item>
+    <ion-icon name="logo-usd" color="danger" item-start></ion-icon>
+    Total Egresos
+    <ion-badge color="danger" style="font-size: medium;" item-end>{{ '$ ' + FormatMiles(countEgresos) }}</ion-badge>
+  </ion-item>
+  <!-- cantidad documentos -->
+  <ion-item>
+    <ion-icon name="archive" item-start></ion-icon>
+    Documentos
+    <ion-badge item-end>{{ countDocumentos }}</ion-badge>
+  </ion-item>
 
-  <ion-list inset>
-    <ion-item>
-      <ion-label>Nombre Usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
-    </ion-item>
-  </ion-list>
-  <div padding>
-    <button ion-button color="secondary" block (click)="getRepos()">Buscar</button>
-  </div>
-  <ion-card *ngFor="let repo of foundRepos" (click)="goToDetails(repo)">
-    <ion-card-header>
-      {{ repo.name }}
-    </ion-card-header>
-    <ion-card-content>
-      {{ repo.description }}
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>
 
