@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 import { GitHubService } from '../../app/services/github';
 import { AuthService } from '../../app/services/AuthService';
 import { UsuarioService } from '../../app/services/UsuarioService';
@@ -35,9 +36,15 @@ export class HomePage {
     private mov: MovimientoService,
     private doc: DocumentoService,
     private inst: InstitucionService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public loading: LoadingController
   ){
       this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
+      //iniciamos loading
+      let loader = this.loading.create({
+        content: 'Cargando...',
+      });
+    loader.present().then(() => {
       //get users dependiendo del rol
       this.usu.getUsers().subscribe(
         data => {
@@ -52,9 +59,9 @@ export class HomePage {
         dataMov => {
           this.movimientoData = dataMov.json().proposals;
           //aca procesamos despues los movimientos para obtener los ingresos y egresos
-          if (this.movimientoData != null && this.movimientoData.length > 0){
-            for (var s in this.movimientoData){
-              if (this.movimientoData[s].OtroUno == "Ingreso"){
+          if (this.movimientoData != null && this.movimientoData.length > 0) {
+            for (var s in this.movimientoData) {
+              if (this.movimientoData[s].OtroUno == "Ingreso") {
                 let valor = parseInt(this.movimientoData[s].OtroTres);
                 this.countIngresos = this.countIngresos + valor;
               } else {
@@ -85,6 +92,9 @@ export class HomePage {
         err => console.error(err),
         () => console.log('get instituciones completed')
       );
+
+      loader.dismiss();
+    });
 
   }
   getRepos() {

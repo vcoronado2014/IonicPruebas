@@ -3,6 +3,28 @@ page-home {
     font-size: 2.4em;
   }
   ion-badge {
-    font-size: 1.5em;
+    font-size: 1.2em;
+  }
+  .card-md {
+    margin: 10px;
+    border-radius: 2px;
+    width: calc(100% - 20px);
+    font-size: 1.4rem;
+    background: #fff;
+  }
+  .card-ios {
+    margin: 10px;
+    border-radius: 2px;
+    width: calc(100% - 20px);
+    font-size: 1.4rem;
+    background: #fff;
+  }
+  .border-right-item {
+    border-right-color: #51CFB1;
+    border-right-style: solid;
+  }
+  .border-bottom-item {
+    border-bottom-color: #51CFB1;
+    border-bottom-style: solid;
   }
 }

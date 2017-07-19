@@ -17,36 +17,90 @@
   <ion-fab top right edge>
     <button ion-fab mini (click)="logout()" color="dark"><ion-icon name="close"></ion-icon></button>
   </ion-fab>
-  <!-- cantidad usuarios -->
-  <ion-item>
-    <ion-icon name="people" item-start></ion-icon>
-    Usuarios
-    <ion-badge item-end>{{ countUsuarios }}</ion-badge>
-  </ion-item>
-  <!-- cantidad instituciones -->
-  <ion-item>
-    <ion-icon name="home" item-start></ion-icon>
-    Instituciones
-    <ion-badge item-end>{{ countInstituciones }}</ion-badge>
-  </ion-item>
-  <!-- ingresos -->
-  <ion-item>
-    <ion-icon name="logo-usd" color="secondary" item-start></ion-icon>
-    Total Ingresos
-    <ion-badge color="secondary" style="font-size: medium;" item-end>{{ '$ ' + FormatMiles(countIngresos) }}</ion-badge>
-  </ion-item>
-  <!-- egresos -->
-  <ion-item>
-    <ion-icon name="logo-usd" color="danger" item-start></ion-icon>
-    Total Egresos
-    <ion-badge color="danger" style="font-size: medium;" item-end>{{ '$ ' + FormatMiles(countEgresos) }}</ion-badge>
-  </ion-item>
-  <!-- cantidad documentos -->
-  <ion-item>
-    <ion-icon name="archive" item-start></ion-icon>
-    Documentos
-    <ion-badge item-end>{{ countDocumentos }}</ion-badge>
-  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center class="bg-green-pastel-1 fg-white">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <ion-icon name="people"></ion-icon>
+
+            </ion-col>
+            <ion-col col-8>
+              <ion-label class="fg-font-size-18">Usuarios</ion-label>
+              <!--<ion-label class="fg-size-20" item-end>{{ countUsuarios }}</ion-label>-->
+              <button ion-button round outline class="no-border fg-white fg-font-size-22">{{ countUsuarios }}</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col text-center class="bg-green-pastel-2 fg-white">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <ion-icon name="logo-usd"></ion-icon>
+
+            </ion-col>
+            <ion-col col-8>
+              <ion-label class="fg-font-size-18">Ingresos</ion-label>
+              <button ion-button round outline class="no-border fg-white fg-size-18">{{ '$ ' + FormatMiles(countIngresos) }}</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center class="bg-green-pastel-4 fg-white">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <ion-icon name="archive"></ion-icon>
+
+          </ion-col>
+          <ion-col col-8>
+            <ion-label class="fg-font-size-18">Documentos</ion-label>
+            <button ion-button round outline class="no-border fg-white fg-font-size-22">{{ countDocumentos }}</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+      <ion-col text-center class="bg-green-pastel-3">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <ion-icon name="logo-usd"></ion-icon>
+
+            </ion-col>
+            <ion-col col-8>
+              <ion-label class="fg-font-size-18">Egresos</ion-label>
+              <button ion-button round outline class="no-border fg-size-18">{{ '$ ' + FormatMiles(countEgresos) }}</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+
+    </ion-row>
+    <!-- fila de los elementos a votar -->
+    <ion-row>
+      <ion-list>
+        <ion-list-header>
+          Votación en Línea
+        </ion-list-header>
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-icon name="hammer"></ion-icon>
+          </ion-avatar>
+
+          <h2>Nombre del Proyecto</h2>
+          <h3>Objetivo del Pryecto</h3>
+          <p>Toda la Descripción del proyecto</p>
+
+        </ion-item>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
+
 
 
 </ion-content>
