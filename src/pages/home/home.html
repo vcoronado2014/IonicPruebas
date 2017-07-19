@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="logout()"><ion-icon name="close"></ion-icon></button>
+    <button ion-fab mini (click)="logout()" color="dark"><ion-icon name="close"></ion-icon></button>
   </ion-fab>
   <!-- cantidad usuarios -->
   <ion-item>
@@ -54,7 +54,7 @@
 <ion-footer no-border class="secondary">
   <ion-toolbar row>
 
-    <ion-icon name="md-person" col></ion-icon>
+    <ion-icon name="md-person" style="font-size: 1.2em;" col></ion-icon>
     <label ion-text col>{{ nombreUsuario }}</label>
   </ion-toolbar>
 </ion-footer>
