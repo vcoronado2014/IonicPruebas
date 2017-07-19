@@ -8,16 +8,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
-import { LoginPage } from '../pages/login/login';
-
-import { AuthService } from '../app/services/AuthService';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    DetailsPage,
-    LoginPage
+    HomePage, 
+    DetailsPage
   ],
   imports: [
     BrowserModule,
@@ -28,13 +24,11 @@ import { AuthService } from '../app/services/AuthService';
   entryComponents: [
     MyApp,
     HomePage,
-    DetailsPage,
-    LoginPage
+    DetailsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
