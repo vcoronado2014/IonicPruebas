@@ -7,13 +7,14 @@ import { UsuarioService } from '../../app/services/UsuarioService';
 import { MovimientoService } from '../../app/services/MovimientoService';
 import { DocumentoService } from '../../app/services/DocumentoService';
 import { InstitucionService } from '../../app/services/InstitucionService';
+import { ProyectoService } from '../../app/services/ProyectoService';
 import { DetailsPage } from '../../pages/details/details';
 import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService]
 })
 export class HomePage {
   public foundRepos;
@@ -21,6 +22,7 @@ export class HomePage {
   public nombreUsuario: string;
   public userData;
   public movimientoData;
+  public proyectoData;
   public countUsuarios: string;
   public countIngresos = 0;
   public countEgresos = 0;
@@ -36,6 +38,7 @@ export class HomePage {
     private mov: MovimientoService,
     private doc: DocumentoService,
     private inst: InstitucionService,
+    private proy: ProyectoService,
     public navCtrl: NavController,
     public loading: LoadingController
   ){
@@ -91,6 +94,23 @@ export class HomePage {
         },
         err => console.error(err),
         () => console.log('get instituciones completed')
+      );
+      //obtencion de los proyectos
+      this.proy.getProyectos().subscribe(
+        dataProy => {
+          this.proyectoData = dataProy.json().proposals;
+          //aca procesamos despues los movimientos para obtener los ingresos y egresos
+          if (this.proyectoData != null && this.proyectoData.length > 0) {
+            for (var s in this.proyectoData) {
+
+              //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
+
+
+            }
+          }
+        },
+        err => console.error(err),
+        () => console.log('get proyectos completed')
       );
 
       loader.dismiss();

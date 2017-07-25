@@ -87,12 +87,12 @@
         <ion-list-header>
           Votación en Línea
         </ion-list-header>
-        <ion-item>
+        <ion-item *ngFor="let item of proyectoData">
           <ion-avatar item-start>
             <ion-icon name="hammer"></ion-icon>
           </ion-avatar>
 
-          <h2>Nombre del Proyecto</h2>
+          <h2>{{ item.NombreCompleto }}</h2>
           <h3>Objetivo del Pryecto</h3>
           <p>Toda la Descripción del proyecto</p>
 
