@@ -22,7 +22,8 @@ export class HomePage {
   public nombreUsuario: string;
   public userData;
   public movimientoData;
-  public proyectoData;
+  public proyectoData = [];
+  public proyectoDataProcesar;
   public countUsuarios: string;
   public countIngresos = 0;
   public countEgresos = 0;
@@ -98,13 +99,20 @@ export class HomePage {
       //obtencion de los proyectos
       this.proy.getProyectos().subscribe(
         dataProy => {
-          this.proyectoData = dataProy.json().proposals;
+          this.proyectoDataProcesar = dataProy.json().proposals;
           //aca procesamos despues los movimientos para obtener los ingresos y egresos
-          if (this.proyectoData != null && this.proyectoData.length > 0) {
-            for (var s in this.proyectoData) {
-
+          let fechaActual = new Date();
+          let fechaActualInt = this.FechaEnteraDate(fechaActual);
+          if (this.proyectoDataProcesar != null && this.proyectoDataProcesar.length > 0) {
+            for (var s in this.proyectoDataProcesar) {
+              let fechaEnteraTermino = this.FechaEnteraStr(this.proyectoDataProcesar[s].OtroDos);
               //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
-
+              //y que
+              if (fechaEnteraTermino >= fechaActualInt && this.proyectoDataProcesar[s].OtroSiete == "1")
+              {
+                //este elemento hay que agregarlo
+                this.proyectoData.push(this.proyectoDataProcesar[s]);
+              }
 
             }
           }
@@ -160,6 +168,36 @@ export class HomePage {
       retorno = input.toString().replace(/[^\d\.]*/g,'');
     }
     return retorno;
+  }
+
+  FechaEnteraStr = function(fechaStr)  {
+    var parteUno = fechaStr.split('-');
+    var parteDos = parteUno[2].split(' ');
+
+    return parseInt(parteDos[0] + parteUno[1] + parteUno[0]);
+
+  }
+  FechaEnteraDate = function (fechaDate){
+    var dia = "";
+    var mes = "";
+    var anno = "";
+
+    var diaInt = fechaDate.getDay();
+    var mesInt = fechaDate.getMonth();
+    var annoInt = fechaDate.getFullYear();
+
+    if (diaInt < 10)
+      dia = "0" + diaInt.toString();
+    else
+      dia = diaInt.toString();
+    if (mesInt < 10)
+      mes = "0" + mesInt.toString();
+    else
+      mes = mesInt.toString();
+
+    anno = annoInt.toString();
+
+    return parseInt(anno + mes + dia);
   }
 
 }

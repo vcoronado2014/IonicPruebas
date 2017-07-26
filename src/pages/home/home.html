@@ -83,7 +83,7 @@
     </ion-row>
     <!-- fila de los elementos a votar -->
     <ion-row>
-      <ion-list>
+      <ion-list style="width: 100%;">
         <ion-list-header>
           Votación en Línea
         </ion-list-header>
@@ -91,10 +91,20 @@
           <ion-avatar item-start>
             <ion-icon name="hammer"></ion-icon>
           </ion-avatar>
+          <ion-row>
+            <ion-col text-left style="font-size: x-small; font-style: italic;" class="fg-gris">
+               {{ item.OtroDiez }}
+            </ion-col>
+            <ion-col text-right style="font-size: x-small; font-style: italic;" class="fg-gris">
+              <ion-icon name="clock" style="font-size: x-small;"></ion-icon> {{ item.OtroCinco }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <h2 class="fg-brown">{{ item.NombreUsuario }}</h2>
+          </ion-row>
 
-          <h2>{{ item.NombreCompleto }}</h2>
-          <h3>Objetivo del Pryecto</h3>
-          <p>Toda la Descripción del proyecto</p>
+          <h3>{{ item.NombreCompleto }}</h3>
+          <p>{{ item.OtroSeis }}</p>
 
         </ion-item>
       </ion-list>
