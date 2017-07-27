@@ -88,18 +88,25 @@
           Votación en Línea
         </ion-list-header>
         <ion-item *ngFor="let item of proyectoData">
-          <ion-avatar item-start>
+
+<!--          <ion-avatar item-start>
             <ion-icon name="hammer"></ion-icon>
-          </ion-avatar>
+          </ion-avatar>-->
+
           <ion-row>
-            <ion-col text-left style="font-size: x-small; font-style: italic;" class="fg-gris">
-               {{ item.OtroDiez }}
+
+            <ion-col item-start style="font-size: x-small; font-style: italic;" class="fg-gris">
+              <ion-badge item-start style="margin: 0; background-color: #69717d;">{{ item.OtroDiez }}</ion-badge>
             </ion-col>
-            <ion-col text-right style="font-size: x-small; font-style: italic;" class="fg-gris">
+            <ion-col item-start style="font-size: x-small; font-style: italic;" class="fg-gris">
               <ion-icon name="clock" style="font-size: x-small;"></ion-icon> {{ item.OtroCinco }}
+            </ion-col>
+            <ion-col>
+              <ion-badge item-end style="margin: 0; background-color: #5687bb; font-size: x-small; float: right;">{{ item.Rol }}</ion-badge>
             </ion-col>
           </ion-row>
           <ion-row>
+
             <h2 class="fg-brown">{{ item.NombreUsuario }}</h2>
           </ion-row>
 

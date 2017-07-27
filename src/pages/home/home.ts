@@ -8,13 +8,14 @@ import { MovimientoService } from '../../app/services/MovimientoService';
 import { DocumentoService } from '../../app/services/DocumentoService';
 import { InstitucionService } from '../../app/services/InstitucionService';
 import { ProyectoService } from '../../app/services/ProyectoService';
+import { TricelService } from '../../app/services/TricelService';
 import { DetailsPage } from '../../pages/details/details';
 import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService]
 })
 export class HomePage {
   public foundRepos;
@@ -24,6 +25,8 @@ export class HomePage {
   public movimientoData;
   public proyectoData = [];
   public proyectoDataProcesar;
+  public tricelData = [];
+  public tricelDataProcesar;
   public countUsuarios: string;
   public countIngresos = 0;
   public countEgresos = 0;
@@ -40,6 +43,7 @@ export class HomePage {
     private doc: DocumentoService,
     private inst: InstitucionService,
     private proy: ProyectoService,
+    private tri: TricelService,
     public navCtrl: NavController,
     public loading: LoadingController
   ){
@@ -110,8 +114,34 @@ export class HomePage {
               //y que
               if (fechaEnteraTermino >= fechaActualInt && this.proyectoDataProcesar[s].OtroSiete == "1")
               {
+                this.proyectoDataProcesar[s].Rol = "P";
                 //este elemento hay que agregarlo
                 this.proyectoData.push(this.proyectoDataProcesar[s]);
+              }
+
+            }
+          }
+        },
+        err => console.error(err),
+        () => console.log('get proyectos completed')
+      );
+      //obtencion de los tricel
+      this.tri.getTricel().subscribe(
+        dataTri => {
+          this.tricelDataProcesar = dataTri.json().proposals;
+          //aca procesamos despues los movimientos para obtener los ingresos y egresos
+          let fechaActual = new Date();
+          let fechaActualInt = this.FechaEnteraDate(fechaActual);
+          if (this.tricelDataProcesar != null && this.tricelDataProcesar.length > 0) {
+            for (var s in this.tricelDataProcesar) {
+              let fechaEnteraTermino = this.FechaEnteraStr(this.tricelDataProcesar[s].OtroDos);
+              //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
+              //y que
+              if (fechaEnteraTermino >= fechaActualInt && this.tricelDataProcesar[s].OtroSiete == "1")
+              {
+                this.tricelDataProcesar[s].Rol = "T";
+                //este elemento hay que agregarlo
+                this.proyectoData.push(this.tricelDataProcesar[s]);
               }
 
             }
