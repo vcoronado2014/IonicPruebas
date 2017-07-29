@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Calendar } from '@ionic-native/calendar';
 import { LoadingController } from 'ionic-angular';
 import { GitHubService } from '../../app/services/github';
 import { AuthService } from '../../app/services/AuthService';
@@ -15,7 +16,7 @@ import { LoginPage } from '../../pages/login/login';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, Calendar]
 })
 export class HomePage {
   public foundRepos;
@@ -34,6 +35,85 @@ export class HomePage {
   public countDocumentos: string;
   public institucionData;
   public countInstituciones: string;
+  //calendario
+  public eventSource;
+  public viewTitle;
+  public isToday: boolean;
+  public calendar = {
+    mode: 'month',
+    currentDate: new Date()
+  }; // these are the variable used by the calendar.
+
+  loadEvents() {
+    this.eventSource = this.createRandomEvents();
+  }
+  onViewTitleChanged(title) {
+    this.viewTitle = title;
+  }
+  onEventSelected(event) {
+    console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+  }
+  changeMode(mode) {
+    this.calendar.mode = mode;
+  }
+  today() {
+    this.calendar.currentDate = new Date();
+  }
+  onTimeSelected(ev) {
+    console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
+      (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+  }
+  onCurrentDateChanged(event:Date) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    event.setHours(0, 0, 0, 0);
+    this.isToday = today.getTime() === event.getTime();
+  }
+  createRandomEvents() {
+    var events = [];
+    for (var i = 0; i < 50; i += 1) {
+      var date = new Date();
+      var eventType = Math.floor(Math.random() * 2);
+      var startDay = Math.floor(Math.random() * 90) - 45;
+      var endDay = Math.floor(Math.random() * 2) + startDay;
+      var startTime;
+      var endTime;
+      if (eventType === 0) {
+        startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
+        if (endDay === startDay) {
+          endDay += 1;
+        }
+        endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
+        events.push({
+          title: 'All Day - ' + i,
+          startTime: startTime,
+          endTime: endTime,
+          allDay: true
+        });
+      } else {
+        var startMinute = Math.floor(Math.random() * 24 * 60);
+        var endMinute = Math.floor(Math.random() * 180) + startMinute;
+        startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
+        endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
+        events.push({
+          title: 'Event - ' + i,
+          startTime: startTime,
+          endTime: endTime,
+          allDay: false
+        });
+      }
+    }
+    return events;
+  }
+  onRangeChanged(ev) {
+    console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
+  }
+  markDisabled = (date:Date) => {
+    var current = new Date();
+    current.setHours(0, 0, 0);
+    return date < current;
+  };
+  //fin de calendario
 
   constructor(
     private github: GitHubService,
@@ -45,6 +125,7 @@ export class HomePage {
     private proy: ProyectoService,
     private tri: TricelService,
     public navCtrl: NavController,
+    public cal: Calendar,
     public loading: LoadingController
   ){
       this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
@@ -52,109 +133,111 @@ export class HomePage {
       let loader = this.loading.create({
         content: 'Cargando...',
       });
-    loader.present().then(() => {
-      //get users dependiendo del rol
-      this.usu.getUsers().subscribe(
-        data => {
-          this.userData = data.json().proposals;
-          this.countUsuarios = this.userData.length;
-        },
-        err => console.error(err),
-        () => console.log('get users completed')
-      );
-      //obtencion de los movimientos
-      this.mov.getMovimientos().subscribe(
-        dataMov => {
-          this.movimientoData = dataMov.json().proposals;
-          //aca procesamos despues los movimientos para obtener los ingresos y egresos
-          if (this.movimientoData != null && this.movimientoData.length > 0) {
-            for (var s in this.movimientoData) {
-              if (this.movimientoData[s].OtroUno == "Ingreso") {
-                let valor = parseInt(this.movimientoData[s].OtroTres);
-                this.countIngresos = this.countIngresos + valor;
-              } else {
-                let valor = parseInt(this.movimientoData[s].OtroTres);
-                this.countEgresos = this.countEgresos + valor;
+      loader.present().then(() => {
+        //get users dependiendo del rol
+        this.usu.getUsers().subscribe(
+          data => {
+            this.userData = data.json().proposals;
+            this.countUsuarios = this.userData.length;
+          },
+          err => console.error(err),
+          () => console.log('get users completed')
+        );
+        //obtencion de los movimientos
+        this.mov.getMovimientos().subscribe(
+          dataMov => {
+            this.movimientoData = dataMov.json().proposals;
+            //aca procesamos despues los movimientos para obtener los ingresos y egresos
+            if (this.movimientoData != null && this.movimientoData.length > 0) {
+              for (var s in this.movimientoData) {
+                if (this.movimientoData[s].OtroUno == "Ingreso") {
+                  let valor = parseInt(this.movimientoData[s].OtroTres);
+                  this.countIngresos = this.countIngresos + valor;
+                } else {
+                  let valor = parseInt(this.movimientoData[s].OtroTres);
+                  this.countEgresos = this.countEgresos + valor;
+                }
               }
             }
-          }
-        },
-        err => console.error(err),
-        () => console.log('get movimientos completed')
-      );
-      //obtencion de los documentos
-      this.doc.getDocumentos().subscribe(
-        dataDoc => {
-          this.documentoData = dataDoc.json().proposals;
-          this.countDocumentos = this.documentoData.length;
-        },
-        err => console.error(err),
-        () => console.log('get documentos completed')
-      );
-      //obtencion de las instituciones
-      this.inst.getInstituciones().subscribe(
-        dataInst => {
-          this.institucionData = dataInst.json().proposals;
-          this.countInstituciones = this.institucionData.length;
-        },
-        err => console.error(err),
-        () => console.log('get instituciones completed')
-      );
-      //obtencion de los proyectos
-      this.proy.getProyectos().subscribe(
-        dataProy => {
-          this.proyectoDataProcesar = dataProy.json().proposals;
-          //aca procesamos despues los movimientos para obtener los ingresos y egresos
-          let fechaActual = new Date();
-          let fechaActualInt = this.FechaEnteraDate(fechaActual);
-          if (this.proyectoDataProcesar != null && this.proyectoDataProcesar.length > 0) {
-            for (var s in this.proyectoDataProcesar) {
-              let fechaEnteraTermino = this.FechaEnteraStr(this.proyectoDataProcesar[s].OtroDos);
-              //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
-              //y que
-              if (fechaEnteraTermino >= fechaActualInt && this.proyectoDataProcesar[s].OtroSiete == "1")
-              {
-                this.proyectoDataProcesar[s].Rol = "P";
-                //este elemento hay que agregarlo
-                this.proyectoData.push(this.proyectoDataProcesar[s]);
+          },
+          err => console.error(err),
+          () => console.log('get movimientos completed')
+        );
+        //obtencion de los documentos
+        this.doc.getDocumentos().subscribe(
+          dataDoc => {
+            this.documentoData = dataDoc.json().proposals;
+            this.countDocumentos = this.documentoData.length;
+          },
+          err => console.error(err),
+          () => console.log('get documentos completed')
+        );
+        //obtencion de las instituciones
+        this.inst.getInstituciones().subscribe(
+          dataInst => {
+            this.institucionData = dataInst.json().proposals;
+            this.countInstituciones = this.institucionData.length;
+          },
+          err => console.error(err),
+          () => console.log('get instituciones completed')
+        );
+        //obtencion de los proyectos
+        this.proy.getProyectos().subscribe(
+          dataProy => {
+            this.proyectoDataProcesar = dataProy.json().proposals;
+            //aca procesamos despues los movimientos para obtener los ingresos y egresos
+            let fechaActual = new Date();
+            let fechaActualInt = this.FechaEnteraDate(fechaActual);
+            if (this.proyectoDataProcesar != null && this.proyectoDataProcesar.length > 0) {
+              for (var s in this.proyectoDataProcesar) {
+                let fechaEnteraTermino = this.FechaEnteraStr(this.proyectoDataProcesar[s].OtroDos);
+                //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
+                //y que
+                if (fechaEnteraTermino >= fechaActualInt && this.proyectoDataProcesar[s].OtroSiete == "1")
+                {
+                  this.proyectoDataProcesar[s].Rol = "P";
+                  //este elemento hay que agregarlo
+                  this.proyectoData.push(this.proyectoDataProcesar[s]);
+                }
+
               }
-
             }
-          }
-        },
-        err => console.error(err),
-        () => console.log('get proyectos completed')
-      );
-      //obtencion de los tricel
-      this.tri.getTricel().subscribe(
-        dataTri => {
-          this.tricelDataProcesar = dataTri.json().proposals;
-          //aca procesamos despues los movimientos para obtener los ingresos y egresos
-          let fechaActual = new Date();
-          let fechaActualInt = this.FechaEnteraDate(fechaActual);
-          if (this.tricelDataProcesar != null && this.tricelDataProcesar.length > 0) {
-            for (var s in this.tricelDataProcesar) {
-              let fechaEnteraTermino = this.FechaEnteraStr(this.tricelDataProcesar[s].OtroDos);
-              //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
-              //y que
-              if (fechaEnteraTermino >= fechaActualInt && this.tricelDataProcesar[s].OtroSiete == "1")
-              {
-                this.tricelDataProcesar[s].Rol = "T";
-                //este elemento hay que agregarlo
-                this.proyectoData.push(this.tricelDataProcesar[s]);
+          },
+          err => console.error(err),
+          () => console.log('get proyectos completed')
+        );
+        //obtencion de los tricel
+        this.tri.getTricel().subscribe(
+          dataTri => {
+            this.tricelDataProcesar = dataTri.json().proposals;
+            //aca procesamos despues los movimientos para obtener los ingresos y egresos
+            let fechaActual = new Date();
+            let fechaActualInt = this.FechaEnteraDate(fechaActual);
+            if (this.tricelDataProcesar != null && this.tricelDataProcesar.length > 0) {
+              for (var s in this.tricelDataProcesar) {
+                let fechaEnteraTermino = this.FechaEnteraStr(this.tricelDataProcesar[s].OtroDos);
+                //aca hay que procesar solo aquellos que tienen fecha de termino despues de la actual
+                //y que
+                if (fechaEnteraTermino >= fechaActualInt && this.tricelDataProcesar[s].OtroSiete == "1")
+                {
+                  this.tricelDataProcesar[s].Rol = "T";
+                  this.tricelDataProcesar[s].OtroSeis = this.tricelDataProcesar[s].NombreCompleto;
+                  //este elemento hay que agregarlo
+                  this.proyectoData.push(this.tricelDataProcesar[s]);
+                }
+
               }
-
             }
-          }
-        },
-        err => console.error(err),
-        () => console.log('get proyectos completed')
-      );
+          },
+          err => console.error(err),
+          () => console.log('get proyectos completed')
+        );
 
-      loader.dismiss();
-    });
+        loader.dismiss();
+      });
 
   }
+
   getRepos() {
     this.github.getRepos(this.username).subscribe(
       data => {
