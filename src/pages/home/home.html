@@ -1,4 +1,3 @@
-
 <ion-header color="green-500">
   <ion-navbar color="green-500">
     <button ion-button menuToggle>
@@ -82,37 +81,6 @@
 
     </ion-row>
     <!-- fila de los elementos a votar -->
-
-    <!--<ion-row>
-      <ion-list style="width: 100%;">
-        <ion-list-header>
-          Votación en Línea
-        </ion-list-header>
-        <ion-item *ngFor="let item of proyectoData">
-          <ion-row>
-
-            <ion-col item-start style="font-size: x-small; font-style: italic;" class="fg-gris">
-              <ion-badge item-start style="margin: 0; background-color: #69717d;">{{ item.OtroDiez }}</ion-badge>
-            </ion-col>
-            <ion-col item-start style="font-size: x-small; font-style: italic;" class="fg-gris">
-              <ion-icon name="clock" style="font-size: x-small;"></ion-icon> {{ item.OtroCinco }}
-            </ion-col>
-            <ion-col>
-              <ion-badge item-end style="margin: 0; background-color: #5687bb; font-size: x-small; float: right;">{{ item.Rol }}</ion-badge>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-
-            <h2 class="fg-brown">{{ item.NombreUsuario }}</h2>
-          </ion-row>
-
-          <h3>{{ item.NombreCompleto }}</h3>
-          <p>{{ item.OtroSeis }}</p>
-
-        </ion-item>
-      </ion-list>
-    </ion-row>-->
-
     <!-- al estilo facebook -->
     <ion-row>
       <ion-card *ngFor="let item of proyectoData">
@@ -148,36 +116,33 @@
       </ion-card>
 
     </ion-row>
+    <ion-row class="cuadroCalendario">
+      <ion-col>
+        <ion-title>{{viewTitle}}</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-buttons end>
+          <button ion-button [disabled]="isToday" (click)="today()">Hoy</button>
+<!--          <button ion-button (click)="changeMode('month')">M</button>
+          <button ion-button (click)="changeMode('week')">W</button>
+          <button ion-button (click)="changeMode('day')">D</button>
+          <button ion-button (click)="loadEvents()">Cargar</button>-->
+        </ion-buttons>
+      </ion-col>
+      <calendar [eventSource]="eventSource"
+                [calendarMode]="calendar.mode"
+                [currentDate]="calendar.currentDate"
+                (onCurrentDateChanged)="onCurrentDateChanged($event)"
+                (onEventSelected)="onEventSelected($event)"
+                (onTitleChanged)="onViewTitleChanged($event)"
+                (onTimeSelected)="onTimeSelected($event)"
+                step="30" style="width: 100%;">
+      </calendar>
 
-    <!-- calendario -->
-    <ion-row>
-      <ion-header>
-        <ion-navbar color="primary">
-          <ion-title>{{viewTitle}}</ion-title>
-          <ion-buttons end>
-            <button ion-button [disabled]="isToday" (click)="today()">Today</button>
-            <button ion-button (click)="changeMode('month')">M</button>
-            <button ion-button (click)="changeMode('week')">W</button>
-            <button ion-button (click)="changeMode('day')">D</button>
-            <button ion-button (click)="loadEvents()">Load Events</button>
-          </ion-buttons>
-        </ion-navbar>
-      </ion-header>
-      <ion-content class="has-header">
-        <calendar [eventSource]="eventSource"
-                  [calendarMode]="calendar.mode"
-                  [currentDate]="calendar.currentDate"
-                  (onCurrentDateChanged)="onCurrentDateChanged($event)"
-                  (onEventSelected)="onEventSelected($event)"
-                  (onTitleChanged)="onViewTitleChanged($event)"
-                  (onTimeSelected)="onTimeSelected($event)"
-                  step="30">
-        </calendar>
-      </ion-content>
+
     </ion-row>
+
   </ion-grid>
-
-
 
 </ion-content>
 

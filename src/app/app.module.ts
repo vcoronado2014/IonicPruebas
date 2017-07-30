@@ -11,6 +11,7 @@ import { DetailsPage } from '../pages/details/details';
 import { LoginPage } from '../pages/login/login';
 
 import { AuthService } from '../app/services/AuthService';
+import { NgCalendarModule } from 'ionic2-calendar';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthService } from '../app/services/AuthService';
   imports: [
     BrowserModule,
     HttpModule,
+    NgCalendarModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
