@@ -119,10 +119,11 @@
     <ion-row class="cuadroCalendario">
       <ion-col>
         <ion-title>{{viewTitle}}</ion-title>
+        <ion-label style="font-size: xx-small;" class="no-padding no-margin">Pinche en el día para ver detalles</ion-label>
       </ion-col>
       <ion-col>
         <ion-buttons end>
-          <button ion-button [disabled]="isToday" (click)="today()">Hoy</button>
+          <button ion-button [disabled]="isToday" (click)="today()" class="button-small">Hoy</button>
 <!--          <button ion-button (click)="changeMode('month')">M</button>
           <button ion-button (click)="changeMode('week')">W</button>
           <button ion-button (click)="changeMode('day')">D</button>

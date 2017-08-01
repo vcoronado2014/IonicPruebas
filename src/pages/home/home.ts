@@ -9,13 +9,14 @@ import { DocumentoService } from '../../app/services/DocumentoService';
 import { InstitucionService } from '../../app/services/InstitucionService';
 import { ProyectoService } from '../../app/services/ProyectoService';
 import { TricelService } from '../../app/services/TricelService';
+import { CalendarioService } from '../../app/services/CalendarioService';
 import { DetailsPage } from '../../pages/details/details';
 import { LoginPage } from '../../pages/login/login';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, CalendarioService]
 })
 export class HomePage {
   public foundRepos;
@@ -34,13 +35,17 @@ export class HomePage {
   public countDocumentos: string;
   public institucionData;
   public countInstituciones: string;
+  public calendarioData = [];
+  public calendarioDataProcesar;
 
   eventSource;
   viewTitle;
   isToday:boolean;
   calendar = {
     mode: 'month',
-    currentDate: new Date()
+    currentDate: new Date(),
+    noEventsLabel: 'No hay',
+    allDayLabel: 'Todo el día'
   };
 
   constructor(
@@ -52,10 +57,13 @@ export class HomePage {
     private inst: InstitucionService,
     private proy: ProyectoService,
     private tri: TricelService,
+    private cal: CalendarioService,
     public navCtrl: NavController,
     public loading: LoadingController
   ){
       this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
+      this.calendar.noEventsLabel = 'No hay';
+
       //iniciamos loading
       let loader = this.loading.create({
         content: 'Cargando...',
@@ -157,11 +165,21 @@ export class HomePage {
             }
           },
           err => console.error(err),
-          () => console.log('get proyectos completed')
+          () => console.log('get tricel completed')
         );
 
+        //obtencion de los eventos
+        this.cal.getCalendar().subscribe(
+          dataCal => {
+            this.calendarioDataProcesar = dataCal.json();
+            this.eventSource = this.createEventsCalendario();
+          },
+          err => console.error(err),
+          () => console.log('get eventos completed')
+        );
         //cargar los eventos del calendario
-        this.eventSource = this.createRandomEvents();
+        //this.eventSource = this.createRandomEvents();
+
 
         loader.dismiss();
       });
@@ -172,7 +190,7 @@ export class HomePage {
     this.eventSource = this.createRandomEvents();
   }
   onViewTitleChanged(title) {
-    this.viewTitle = title;
+    this.viewTitle = this.EntregaMes(title);
   }
   onEventSelected(event) {
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
@@ -193,6 +211,39 @@ export class HomePage {
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
   }
+  createEventsCalendario(){
+    if (this.calendarioDataProcesar != null && this.calendarioDataProcesar.length > 0) {
+      for (var s in this.calendarioDataProcesar) {
+        var startDay = this.EntregaFecha(
+          this.calendarioDataProcesar[s].annoIni,
+          this.calendarioDataProcesar[s].mesIni,
+          this.calendarioDataProcesar[s].diaIni,
+          this.calendarioDataProcesar[s].horaIni,
+          this.calendarioDataProcesar[s].minutosIni
+        );
+        var endDay = this.EntregaFecha(
+          this.calendarioDataProcesar[s].annoTer,
+          this.calendarioDataProcesar[s].mesTer,
+          this.calendarioDataProcesar[s].diaTer,
+          this.calendarioDataProcesar[s].horaTer,
+          this.calendarioDataProcesar[s].minutosTer
+        );
+        var eventType = 1;//0 es todo el día
+        var allDay = false;
+        var title = this.calendarioDataProcesar[s].content;
+
+        this.calendarioData.push({
+          title: title,
+          startTime: startDay,
+          endTime: endDay,
+          allDay: false
+        });
+
+      }
+    }
+    return this.calendarioData;
+  }
+
   createRandomEvents() {
     var events = [];
     for (var i = 0; i < 50; i += 1) {
@@ -291,6 +342,15 @@ export class HomePage {
     return parseInt(parteDos[0] + parteUno[1] + parteUno[0]);
 
   }
+  EntregaFecha = function (anno, mes, dia, hora, minuto){
+    var diaInt = parseInt(dia);
+    var mesInt = parseInt(mes) + 1;
+    var annoInt = parseInt(anno);
+    var minutoInt = parseInt(minuto);
+    var horaInt = parseInt(hora);
+
+    return new Date(annoInt, mesInt, diaInt, horaInt, minutoInt, 0, 0);
+  }
   FechaEnteraDate = function (fechaDate){
     var dia = "";
     var mes = "";
@@ -312,6 +372,56 @@ export class HomePage {
     anno = annoInt.toString();
 
     return parseInt(anno + mes + dia);
+  }
+  EntregaMes = function (mes){
+    var retorno = "";
+    if (mes.includes("January")){
+      retorno = mes.replace("January ", "Enero ");
+    }
+    if (mes.includes("February")){
+      retorno = mes.replace("February ", "Febrero ");
+    }
+    if (mes.includes("March")){
+      retorno = mes.replace("March ", "Marzo ");
+    }
+    if (mes.includes("April")){
+      retorno = mes.replace("April ", "Abril ");
+    }
+    if (mes.includes("May")){
+      retorno = mes.replace("May ", "Mayo ");
+    }
+    if (mes.includes("June")){
+      retorno = mes.replace("June ", "Junio ");
+    }
+    if (mes.includes("July")){
+      retorno = mes.replace("Jult ", "Julio ");
+    }
+    if (mes.includes("August")){
+      retorno = mes.replace("August ", "Agosto ");
+    }
+    if (mes.includes("September")){
+      retorno = mes.replace("September ", "Septiembre ");
+    }
+    if (mes.includes("October")){
+      retorno = mes.replace("October ", "Octubre ");
+    }
+    if (mes.includes("November")){
+      retorno = mes.replace("November ", "Noviembre ");
+    }
+    if (mes.includes("December")){
+      retorno = mes.replace("December ", "Diciembre ");
+    }
+
+
+
+
+
+
+
+
+
+
+    return retorno;
   }
 
 }
