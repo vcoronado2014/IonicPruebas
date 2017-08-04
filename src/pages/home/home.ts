@@ -412,15 +412,6 @@ export class HomePage {
       retorno = mes.replace("December ", "Diciembre ");
     }
 
-
-
-
-
-
-
-
-
-
     return retorno;
   }
 

@@ -15,5 +15,16 @@ export class UsuarioService{
     let repos = this.http.get("http://api.asambleas.cl/api/ListarUsuarios?instId=" + instId + "&rolId=" + rolId);
     return repos;
   }
+  getUserById(id){
+    let url = "http://api.asambleas.cl/api/ObtenerUsuario";
+    let dataGet = { IdUsuario: id };
+
+    let usuario = this.http.post(url, dataGet, {
+      headers: new Headers({'Content-Type': 'application/json'})
+    });
+
+    return usuario;
+  }
+
 
 }

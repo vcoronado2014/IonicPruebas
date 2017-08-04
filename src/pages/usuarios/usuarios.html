@@ -1,0 +1,97 @@
+<ion-header color="green-500">
+  <ion-navbar color="green-500">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Usuarios</ion-title>
+    <!--
+      <ion-icon name="close-circle" float-right (click)="logout()"></ion-icon>
+    -->
+
+  </ion-navbar>
+  <ion-toolbar>
+    <!--
+    <ion-title>Header</ion-title>
+    -->
+    <ion-fab middle left edge>
+      <button ion-fab mini  color="secondary">{{ countUsuarios }}</button>
+    </ion-fab>
+    <ion-row class="bg-green-pastel-6 fg-brown">
+      <ion-col col-2>
+      </ion-col>
+      <ion-col col-2 text-right>
+
+        <button ion-button class="bg-green-pastel-4">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-2 text-left>
+        <button ion-button color="secondary" (click)="clearData()">
+          <ion-icon name="sync"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-2 text-left>
+        <button ion-button color="secondary" (click)="filterData()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-4>
+        <i class="icon ion-search placeholder-icon"></i>
+      <ion-input type="text" value="" placeholder="Buscar" id="txtNombreBuscar"></ion-input>
+    </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="logout()" color="dark"><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+  <ion-card>
+    <ion-row item-start style="font-size: small; font-style: italic;" class="fg-gris">
+      <ion-icon name="help" style="font-size: small;"></ion-icon>&nbsp;Arratre el ítem a la derecha para ver las opciones
+    </ion-row>
+  </ion-card>
+  <!-- listado de usuarios -->
+  <ion-list>
+    <!--
+    <ion-list-header class="bg-green-pastel-6 fg-brown">
+
+      <ion-input type="text" value="" placeholder="Buscar"></ion-input>
+      <button ion-button class="button-small">Buscar</button>
+      <ion-item-sliding *ngFor="let item of userData">
+
+    </ion-list-header>
+    -->
+    <ion-item-sliding *ngFor="let item of userData">
+      <ion-item>
+
+        <h2 class="font-bold">{{ item.NombreCompleto }}</h2>
+        <h3 class="font-italic"><ion-icon name="contact"></ion-icon> {{ item.NombreUsuario }}</h3>
+        <p class="font-ocho-em"><ion-icon name="information-circle"></ion-icon> {{ item.Rol }}, Institución {{ item.OtroUno }}</p>
+
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="primary" (click)="goToDetails(item)">
+          <ion-icon name="create"></ion-icon>
+          <ion-label style="font-size: xx-small;" text-center>Editar</ion-label>
+        </button>
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+          <ion-label style="font-size: xx-small;" text-center>Eliminar</ion-label>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer no-border class="secondary">
+  <ion-toolbar row>
+
+    <ion-icon name="md-person" style="font-size: 1.2em;" col></ion-icon>
+    <label ion-text col>{{ nombreUsuario }}</label>
+  </ion-toolbar>
+</ion-footer>

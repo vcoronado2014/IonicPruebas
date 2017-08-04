@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
 import { LoginPage } from '../pages/login/login';
+import { UsuariosPage } from '../pages/usuarios/usuarios';
 
 import { AuthService } from '../app/services/AuthService';
 import { NgCalendarModule } from 'ionic2-calendar';
@@ -18,7 +19,8 @@ import { NgCalendarModule } from 'ionic2-calendar';
     MyApp,
     HomePage,
     DetailsPage,
-    LoginPage
+    LoginPage,
+    UsuariosPage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import { NgCalendarModule } from 'ionic2-calendar';
     MyApp,
     HomePage,
     DetailsPage,
-    LoginPage
+    LoginPage,
+    UsuariosPage
   ],
   providers: [
     StatusBar,
