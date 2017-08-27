@@ -10,10 +10,10 @@ export class DocumentoService{
   constructor(private http: Http){
 
   }
-  getDocumentos(){
+  getDocumentos(url){
     let instId = sessionStorage.getItem("INST_ID");
     let usuId = sessionStorage.getItem("USU_ID");
-    let url = "http://api.asambleas.cl/api/FileDocumento";
+    //let url = "http://api.asambleas.cl/api/FileDocumento";
     let dataGet = { InstId: instId, UsuId: usuId };
 
     let repos = this.http.post(url, dataGet, {

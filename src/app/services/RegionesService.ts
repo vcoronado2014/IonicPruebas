@@ -9,9 +9,9 @@ export class RegionesService{
   constructor(private http: Http){
 
   }
-  getRegiones(){
+  getRegiones(url){
     let instId = sessionStorage.getItem("INST_ID");
-    let url = "http://api.asambleas.cl/api/ObtenerRegiones";
+    //let url = "http://api.asambleas.cl/api/ObtenerRegiones";
     let dataGet = { InstId: instId };
 
     let repos = this.http.post(url, dataGet, {

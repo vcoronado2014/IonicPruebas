@@ -9,9 +9,9 @@ export class ProyectoService{
   constructor(private http: Http){
 
   }
-  getProyectos(){
+  getProyectos(url){
     let instId = sessionStorage.getItem("INST_ID");
-    let url = "http://vcoronado-001-site8.dtempurl.com/api/Proyecto";
+    //let url = "http://vcoronado-001-site8.dtempurl.com/api/Proyecto";
     let dataGet = { InstId: instId };
 
     let repos = this.http.post(url, dataGet, {

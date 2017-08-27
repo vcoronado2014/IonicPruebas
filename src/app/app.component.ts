@@ -21,8 +21,8 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    var paginaUno = {title: 'Inicio', component: HomePage };
-    var paginaDos = {title: 'Usuarios', component: UsuariosPage };
+    var paginaUno = {title: 'Inicio', component: HomePage, visible: true };
+    var paginaDos = {title: 'Usuarios', component: UsuariosPage, visible: this.visibleRol };
     this.pages = [
       paginaUno, paginaDos
     ]
@@ -41,6 +41,29 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+  visibleRol(page){
+    if (sessionStorage.getItem("ROL_ID"))
+    {
+      var rolId = sessionStorage.getItem("ROL_ID");
+      switch (page.title){
+        case 'Inicio':
+          return true;
+        case 'Usuarios':
+          if (rolId == '1'){
+            return true;
+          }
+          else {
+            return false;
+          }
+        default:
+          return false;
+      }
+
+    }
+    else{
+      return false;
+    }
   }
 }
 

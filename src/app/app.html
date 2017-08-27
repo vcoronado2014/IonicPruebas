@@ -25,8 +25,8 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <ion-list ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button menuClose  *ngIf="visibleRol(p)" style="background-color: transparent;">
         {{p.title}}
       </button>
     </ion-list>

@@ -1,9 +1,8 @@
 /**
  * Created by vcoronado on 13-07-2017.
  */
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 
@@ -11,19 +10,21 @@ import 'rxjs/add/operator/map';
 export class AuthService{
   username: string;
   loggedIn: boolean;
-  url: 'http://api.asambleas.cl/api/login';
 
-
-  constructor(private http: Http){
+  constructor(
+    private http: Http
+  ){
     //inicializamos los valores
     this.username = '';
     this.loggedIn = false;
+    //this.url = config.getUrl(this.modo, 'Login');
 
   }
 
-  login(userInfo){
+  login(userInfo, url){
     //let url = this.url;
-    let url = 'http://api.asambleas.cl/api/login';
+    //let url = 'http://api.asambleas.cl/api/login';
+
     let iJson = JSON.stringify(userInfo);
 
     return this.http.post(url, iJson, {

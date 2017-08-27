@@ -7,8 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ title }}</ion-title>
+    <ion-row>
+      <ion-label col-4 class="fg-white">{{ accion }}</ion-label>
+      <ion-label col-7 class="fg-white" style="font-size: x-small">{{ NombreCompleto }}</ion-label>
+    </ion-row>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-row style="background-color: white;">
+      <ion-col text-left>
+        <button ion-button color="danger" outline (click)="presentPrompt()" *ngIf="muestraBotonCambiarClave" >Cambiar Clave</button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button color="primary" outline (click)="guardar()">Guardar</button>
+      </ion-col>
+
+
+    </ion-row>
+  </ion-toolbar>
 
 </ion-header>
 <ion-content padding>
@@ -16,39 +31,48 @@
 
   <ion-list>
     <ion-row>
+      <!-- instituciones -->
+      <ion-item>
+        <ion-label floating><ion-icon name="globe"></ion-icon> Institución</ion-label>
+        <ion-select [(ngModel)]="InstId" [disabled]="desabilitaComboInstituciones">
+          <ion-option *ngFor="let intitucion of dataInstituciones" [value]="intitucion.Id">{{ intitucion.NombreCompleto }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-row>
+    <ion-row>
       <ion-item col-6>
-        <ion-label floating>Nombre Usuario</ion-label>
-        <ion-input name="txtNombreUsuario" type="text" [(ngModel)]="NombreUsuario"></ion-input>
+        <ion-label floating><ion-icon name="person"></ion-icon> Nombre Usuario</ion-label>
+        <ion-input name="txtNombreUsuario" type="text" [(ngModel)]="NombreUsuario" [disabled]="soloLectura"></ion-input>
       </ion-item>
 
       <ion-item col-6>
-        <ion-label floating>Rut</ion-label>
+        <ion-label floating><ion-icon name="information-circle"></ion-icon> Rut</ion-label>
         <ion-input name ="txtRut" type="text" [(ngModel)]="Rut"></ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
-        <ion-label floating>Nombres</ion-label>
+        <ion-label floating><ion-icon name="information-circle"></ion-icon> Nombres</ion-label>
         <ion-input name="txtNombres" type="text" [(ngModel)]="Nombres"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Primer Apellido</ion-label>
+        <ion-label floating><ion-icon name="information-circle"></ion-icon> Primer Apellido</ion-label>
         <ion-input name="txtPrimerApellido" type="text" [(ngModel)]="ApellidoPaterno"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Segundo Apellido</ion-label>
+        <ion-label floating><ion-icon name="information-circle"></ion-icon> Segundo Apellido</ion-label>
         <ion-input name="txtSegundoApellido" type="text" [(ngModel)]="ApellidoMaterno"></ion-input>
       </ion-item>
     </ion-row>
 
     <ion-row>
       <ion-item col-6>
-        <ion-label floating>Teléfono</ion-label>
+        <ion-label floating><ion-icon name="call"></ion-icon> Teléfono</ion-label>
         <ion-input name="txtTelefono" type="text" [(ngModel)]="Telefono"></ion-input>
       </ion-item>
 
       <ion-item col-6>
-        <ion-label floating>Correo</ion-label>
+        <ion-label floating><ion-icon name="mail"></ion-icon> Correo</ion-label>
         <ion-input name ="txtCorreo" type="text" [(ngModel)]="CorreoElectronico"></ion-input>
       </ion-item>
     </ion-row>
@@ -56,16 +80,28 @@
     <ion-row>
       <!-- regiones -->
       <ion-item>
-        <ion-label floating>Región</ion-label>
-        <ion-select [(ngModel)]="RegId">
+        <ion-label floating><ion-icon name="globe"></ion-icon> Región</ion-label>
+        <ion-select [(ngModel)]="RegId" (ngModelChange)="cargarComunasCombo($event)">
           <ion-option *ngFor="let region of dataRegiones" [value]="region.Id">{{ region.Nombre }}</ion-option>
         </ion-select>
       </ion-item>
       <!-- comunas -->
       <ion-item>
-        <ion-label floating>Comuna</ion-label>
+        <ion-label floating><ion-icon name="globe"></ion-icon> Comuna</ion-label>
         <ion-select [(ngModel)]="ComId">
           <ion-option *ngFor="let comuna of dataComunas" [value]="comuna.Id">{{ comuna.Nombre }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <!-- direccion -->
+      <ion-item>
+        <ion-label floating><ion-icon name="map"></ion-icon> Dirección</ion-label>
+        <ion-input name="txtDireccion" type="text" [(ngModel)]="Direccion"></ion-input>
+      </ion-item>
+      <!-- roles -->
+      <ion-item>
+        <ion-label floating><ion-icon name="hammer"></ion-icon> Rol</ion-label>
+        <ion-select [(ngModel)]="RolIdUsuario">
+          <ion-option *ngFor="let rol of dataRoles" [value]="rol.Id">{{ rol.Nombre }}</ion-option>
         </ion-select>
       </ion-item>
     </ion-row>

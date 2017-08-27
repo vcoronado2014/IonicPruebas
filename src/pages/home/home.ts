@@ -12,11 +12,12 @@ import { TricelService } from '../../app/services/TricelService';
 import { CalendarioService } from '../../app/services/CalendarioService';
 import { DetailsPage } from '../../pages/details/details';
 import { LoginPage } from '../../pages/login/login';
+import { ConfigService } from '../../app/services/ConfigService';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, CalendarioService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, CalendarioService, ConfigService]
 })
 export class HomePage {
   public foundRepos;
@@ -51,6 +52,7 @@ export class HomePage {
   constructor(
     private github: GitHubService,
     private auth: AuthService,
+    private config: ConfigService,
     private usu: UsuarioService,
     private mov: MovimientoService,
     private doc: DocumentoService,
@@ -70,7 +72,8 @@ export class HomePage {
       });
       loader.present().then(() => {
         //get users dependiendo del rol
-        this.usu.getUsers().subscribe(
+        let url = this.config.getUrl('ListarUsuarios');
+        this.usu.getUsers(url).subscribe(
           data => {
             this.userData = data.json().proposals;
             this.countUsuarios = this.userData.length;
@@ -79,7 +82,8 @@ export class HomePage {
           () => console.log('get users completed')
         );
         //obtencion de los movimientos
-        this.mov.getMovimientos().subscribe(
+        let url1 = this.config.getUrl('Rendicion');
+        this.mov.getMovimientos(url1).subscribe(
           dataMov => {
             this.movimientoData = dataMov.json().proposals;
             //aca procesamos despues los movimientos para obtener los ingresos y egresos
@@ -99,7 +103,8 @@ export class HomePage {
           () => console.log('get movimientos completed')
         );
         //obtencion de los documentos
-        this.doc.getDocumentos().subscribe(
+        let url2 = this.config.getUrl('FileDocumento');
+        this.doc.getDocumentos(url2).subscribe(
           dataDoc => {
             this.documentoData = dataDoc.json().proposals;
             this.countDocumentos = this.documentoData.length;
@@ -108,7 +113,8 @@ export class HomePage {
           () => console.log('get documentos completed')
         );
         //obtencion de las instituciones
-        this.inst.getInstituciones().subscribe(
+        let url3 = this.config.getUrl('Insttucion');
+        this.inst.getInstituciones(url3).subscribe(
           dataInst => {
             this.institucionData = dataInst.json().proposals;
             this.countInstituciones = this.institucionData.length;
@@ -117,7 +123,8 @@ export class HomePage {
           () => console.log('get instituciones completed')
         );
         //obtencion de los proyectos
-        this.proy.getProyectos().subscribe(
+        let url4 = this.config.getUrl('Proyecto');
+        this.proy.getProyectos(url4).subscribe(
           dataProy => {
             this.proyectoDataProcesar = dataProy.json().proposals;
             //aca procesamos despues los movimientos para obtener los ingresos y egresos
@@ -142,7 +149,8 @@ export class HomePage {
           () => console.log('get proyectos completed')
         );
         //obtencion de los tricel
-        this.tri.getTricel().subscribe(
+        let url5 = this.config.getUrl('Votacion');
+        this.tri.getTricel(url5).subscribe(
           dataTri => {
             this.tricelDataProcesar = dataTri.json().proposals;
             //aca procesamos despues los movimientos para obtener los ingresos y egresos
@@ -169,7 +177,8 @@ export class HomePage {
         );
 
         //obtencion de los eventos
-        this.cal.getCalendar().subscribe(
+        let url6 = this.config.getUrl('Calendario');
+        this.cal.getCalendar(url6).subscribe(
           dataCal => {
             this.calendarioDataProcesar = dataCal.json();
             this.eventSource = this.createEventsCalendario();
@@ -311,7 +320,8 @@ export class HomePage {
 
   //llamadas a la api de usuarios
   getUsers(){
-    this.usu.getUsers().subscribe(
+    var url = this.config.getUrl('ListarUsuarios');
+    this.usu.getUsers(url).subscribe(
       data => {
         this.userData = data.json().proposals;
       },

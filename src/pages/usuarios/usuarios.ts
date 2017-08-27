@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, Config} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { UsuarioService } from '../../app/services/UsuarioService';
 import { AuthService } from '../../app/services/AuthService';
+import { ConfigService } from '../../app/services/ConfigService';
 import { LoginPage } from '../../pages/login/login';
 import { ArrayFilterPipe } from "../../app/array-filter.pipe";
 import { DetailsPage } from '../../pages/details/details';
@@ -17,7 +18,7 @@ import { DetailsPage } from '../../pages/details/details';
 @Component({
   selector: 'page-usuarios',
   templateUrl: 'usuarios.html',
-  providers: [UsuarioService, AuthService, ArrayFilterPipe]
+  providers: [UsuarioService, AuthService, ArrayFilterPipe, ConfigService]
 })
 export class UsuariosPage {
   public username;
@@ -30,6 +31,7 @@ export class UsuariosPage {
     public navCtrl: NavController,
     public loading: LoadingController,
     private auth: AuthService,
+    private config: ConfigService,
     private usu: UsuarioService
   ) {
     this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
@@ -42,7 +44,8 @@ export class UsuariosPage {
     loader.present().then(() => {
       //aca el contenido de las llamadas de negocio
       //get users dependiendo del rol
-      this.usu.getUsers().subscribe(
+      let url = this.config.getUrl('ListarUsuarios');
+      this.usu.getUsers(url).subscribe(
         data => {
           this.userData = data.json().proposals;
           this.userDataOriginal = this.userData;
@@ -83,8 +86,11 @@ export class UsuariosPage {
   }
 
   goToDetails(usuario){
-    this.navCtrl.push(DetailsPage, {usuario: usuario });
+  this.navCtrl.push(DetailsPage, {usuario: usuario });
+}
+  goToDetailsNuevo(id){
+    var user = {Id:id};
+    this.navCtrl.push(DetailsPage, {usuario: user });
   }
-
 
 }

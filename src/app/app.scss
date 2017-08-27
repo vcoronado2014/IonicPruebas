@@ -118,3 +118,40 @@
 .font-ocho-em{
   font-size: 0.8em;
 }
+.alert-wrapper {
+  z-index: 10;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 80%;
+  max-width: 90%;
+  opacity: 0;
+  contain: content;
+}
+.alert-md .alert-wrapper {
+  border-radius: 2px;
+  max-width: 90%;
+  min-width: 80%;
+  background-color: #fafafa;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+}
+.div-image {
+  background-image: url('../assets/img/cuadrado_1.png');
+  background-repeat:no-repeat;
+  background-position:right bottom;
+}
+.monthview-primary-with-event-coro {
+  background-color: white;
+  /*color: white;*/
+  background-image: url('../assets/img/cuadrado_1.png');
+  background-repeat:no-repeat;
+  background-position:right bottom;
+  background-size: 13px 13px;
+}

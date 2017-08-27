@@ -9,10 +9,10 @@ export class CalendarioService{
   constructor(private http: Http){
 
   }
-  getCalendar(){
+  getCalendar(url){
     let instId = sessionStorage.getItem("INST_ID");
     let tipo = '0';
-    let url = "http://api.asambleas.cl/api/Calendario";
+    //let url = "http://api.asambleas.cl/api/Calendario";
     let dataGet = { InstId: instId, Tipo: tipo };
 
     let repos = this.http.post(url, dataGet, {

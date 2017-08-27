@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {NavController, Toast} from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AuthService } from '../../app/services/AuthService';
+import { ConfigService } from '../../app/services/ConfigService';
 import {HomePage} from "../home/home";
 
 /**
@@ -13,6 +14,7 @@ import {HomePage} from "../home/home";
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  providers: [AuthService, ConfigService]
 })
 export class LoginPage {
 
@@ -23,6 +25,7 @@ export class LoginPage {
   constructor(
     private nav: NavController,
     private auth: AuthService,
+    private config: ConfigService,
     public toastCtrl: ToastController
   ) {
   }
@@ -51,7 +54,8 @@ export class LoginPage {
       return;
     }
     let f = { usuario: this.usuario, password: this.password };
-    this.auth.login(f)
+    let url = this.config.getUrl('Login');
+    this.auth.login(f, url)
       .subscribe(
         rs => this.isLogged = rs,
         er => {
