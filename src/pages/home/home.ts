@@ -113,7 +113,7 @@ export class HomePage {
           () => console.log('get documentos completed')
         );
         //obtencion de las instituciones
-        let url3 = this.config.getUrl('Insttucion');
+        let url3 = this.config.getUrl('Institucion');
         this.inst.getInstituciones(url3).subscribe(
           dataInst => {
             this.institucionData = dataInst.json().proposals;

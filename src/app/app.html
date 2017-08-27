@@ -25,6 +25,19 @@
   </ion-header>
 
   <ion-content>
+    <ion-col width-67>
+      <img src="http://api.asambleas.cl/repositorio/usuario_1.jpg" style="max-width: 97%;"/>
+      <ion-item>
+        <ion-icon name="md-person" item-start></ion-icon>
+        {{ nombreUsuario }}
+      </ion-item>
+      <ion-item>
+        <ion-icon name="information-circle" item-start></ion-icon>
+        {{ rolUsuario }}
+
+      </ion-item>
+    </ion-col>
+
     <ion-list ion-item *ngFor="let p of pages" (click)="openPage(p)">
       <button menuClose  *ngIf="visibleRol(p)" style="background-color: transparent;">
         {{p.title}}

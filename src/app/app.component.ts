@@ -15,7 +15,8 @@ export class MyApp {
 
   rootPage:any = LoginPage;
   pages: Array<{title: string, component: any}>
-
+  public nombreUsuario: string;
+  public rolUsuario: string;
 
   constructor(public platform: Platform,public statusBar: StatusBar,public splashScreen: SplashScreen) {
     this.initializeApp();
@@ -23,6 +24,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     var paginaUno = {title: 'Inicio', component: HomePage, visible: true };
     var paginaDos = {title: 'Usuarios', component: UsuariosPage, visible: this.visibleRol };
+    this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
+    this.rolUsuario = sessionStorage.getItem('ROL_NOMBRE');
     this.pages = [
       paginaUno, paginaDos
     ]

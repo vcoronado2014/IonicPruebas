@@ -193,6 +193,7 @@ export class DetailsPage {
       this.RegId = 15;
       this.ComId = 0;
       this.RolIdUsuario = 0;
+      this.InstId = sessionStorage.getItem("INST_ID");
       //seteamos titulo
       this.accion = 'Creando ';
       this.NombreCompleto = 'usuario nuevo.';
