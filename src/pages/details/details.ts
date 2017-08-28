@@ -142,6 +142,32 @@ export class DetailsPage {
     alert.present();
   }
 
+  presentConfirm() {
+    let alert = this.alert.create({
+      title: 'Eliminar',
+      message: '¿Esta seguro de eliminar este Usuario?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelada la eliminación');
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            //realizar la operación de eliminación
+            //solo se debe enviar al Usuario con parametro eliminado = 1
+
+            console.log('Eliminado.');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   recuperarUsuario(id){
     if (id > 0) {
       let url = this.config.getUrl('ObtenerUsuario');

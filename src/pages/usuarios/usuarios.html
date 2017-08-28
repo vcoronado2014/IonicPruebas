@@ -56,15 +56,7 @@
   </ion-card>
   <!-- listado de usuarios -->
   <ion-list>
-    <!--
-    <ion-list-header class="bg-green-pastel-6 fg-brown">
 
-      <ion-input type="text" value="" placeholder="Buscar"></ion-input>
-      <button ion-button class="button-small">Buscar</button>
-      <ion-item-sliding *ngFor="let item of userData">
-
-    </ion-list-header>
-    -->
     <ion-item-sliding *ngFor="let item of userData">
       <ion-item>
 
@@ -74,13 +66,17 @@
 
       </ion-item>
       <ion-item-options side="left">
-        <button ion-button color="primary" (click)="goToDetails(item)">
+        <button ion-button color="primary" (click)="goToDetails(item)" *ngIf="muestraBotonEliminar(item)">
           <ion-icon name="create"></ion-icon>
           <ion-label style="font-size: xx-small;" text-center>Editar</ion-label>
         </button>
-        <button ion-button color="danger">
+        <button ion-button color="danger" (click)="eliminarUsuario(item)" *ngIf="muestraBotonEliminar(item)">
           <ion-icon name="trash"></ion-icon>
           <ion-label style="font-size: xx-small;" text-center>Eliminar</ion-label>
+        </button>
+        <button ion-button color="secondary" (click)="activarUsuario(item)" *ngIf="muestraBotonActivar(item)">
+          <ion-icon name="trash"></ion-icon>
+          <ion-label style="font-size: xx-small;" text-center>Activar</ion-label>
         </button>
       </ion-item-options>
     </ion-item-sliding>

@@ -36,5 +36,21 @@ export class UsuarioService{
     return usuario;
   }
 
+  eliminar(data, url){
+    let dataPut = data;
+
+    let usuario = this.http.delete(url, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+
+    //let usuario = this.http.delete(url, dataPut);
+
+
+
+    return usuario;
+  }
+
 
 }

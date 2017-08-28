@@ -11,10 +11,10 @@ export class ConfigService{
   }
   getUrl(nombreApi){
     let urlBase = '';
-    let urlBaseDevUno = 'http://localhost:50929/api/';
+    let urlBaseDevUno = 'http://localhost:58013/api/';
     let urlBaseDevDos = 'http://localhost:58013/api/';
     let urlBaseProUno = 'http://api.asambleas.cl/api/';
-    let urlBaseProDos = 'http://vcoronado-001-site8.dtempurl.com/api/';
+    let urlBaseProDos = 'http://api.asambleas.cl/api/';
     switch (nombreApi){
       case 'Votacion':
       case 'Tricel':
