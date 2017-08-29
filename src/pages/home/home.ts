@@ -8,6 +8,7 @@ import { MovimientoService } from '../../app/services/MovimientoService';
 import { DocumentoService } from '../../app/services/DocumentoService';
 import { InstitucionService } from '../../app/services/InstitucionService';
 import { ProyectoService } from '../../app/services/ProyectoService';
+import { RolInstitucionService } from '../../app/services/RolInstitucionService';
 import { TricelService } from '../../app/services/TricelService';
 import { CalendarioService } from '../../app/services/CalendarioService';
 import { DetailsPage } from '../../pages/details/details';
@@ -17,7 +18,7 @@ import { ConfigService } from '../../app/services/ConfigService';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, CalendarioService, ConfigService]
+  providers: [GitHubService, AuthService, UsuarioService, MovimientoService, DocumentoService, InstitucionService, ProyectoService, TricelService, CalendarioService, ConfigService, RolInstitucionService]
 })
 export class HomePage {
   public foundRepos;
@@ -38,6 +39,7 @@ export class HomePage {
   public countInstituciones: string;
   public calendarioData = [];
   public calendarioDataProcesar;
+  public dataRol=[];
 
   eventSource;
   viewTitle;
@@ -55,6 +57,7 @@ export class HomePage {
     private config: ConfigService,
     private usu: UsuarioService,
     private mov: MovimientoService,
+    private rol: RolInstitucionService,
     private doc: DocumentoService,
     private inst: InstitucionService,
     private proy: ProyectoService,
@@ -185,6 +188,16 @@ export class HomePage {
           },
           err => console.error(err),
           () => console.log('get eventos completed')
+        );
+
+        //obtencion de los roles
+        let url7 = this.config.getUrl('Rol');
+        this.rol.getRoles(url7).subscribe(
+          dataR => {
+            this.dataRol = dataR.json();
+          },
+          err => console.error(err),
+          () => console.log('get roles completed')
         );
         //cargar los eventos del calendario
         //this.eventSource = this.createRandomEvents();
