@@ -190,6 +190,7 @@ export class HomePage {
           () => console.log('get eventos completed')
         );
 
+        /*
         //obtencion de los roles
         let url7 = this.config.getUrl('Rol');
         this.rol.getRoles(url7).subscribe(
@@ -199,8 +200,7 @@ export class HomePage {
           err => console.error(err),
           () => console.log('get roles completed')
         );
-        //cargar los eventos del calendario
-        //this.eventSource = this.createRandomEvents();
+        */
 
 
         loader.dismiss();

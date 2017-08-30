@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class ConfigService{
-  public ambiente = 'dev'; //las opciones son dev o pro
+  public ambiente = 'pro'; //las opciones son dev o pro
   constructor(){
 
   }
