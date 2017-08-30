@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { UsuariosPage } from '../pages/usuarios/usuarios';
 //import { DetailsPage } from '../pages/details/details';
 import { LoginPage } from '../pages/login/login';
+import { RendicionesPage } from '../pages/rendiciones/rendiciones';
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,10 +25,11 @@ export class MyApp {
     // used for an example of ngFor and navigation
     var paginaUno = {title: 'Inicio', component: HomePage, visible: true };
     var paginaDos = {title: 'Usuarios', component: UsuariosPage, visible: this.visibleRol };
+    var paginaRendiciones= {title: 'Rendiciones', component: RendicionesPage, visible: this.visibleRol };
     this.nombreUsuario = sessionStorage.getItem('PERSONA_NOMBRE');
     this.rolUsuario = sessionStorage.getItem('ROL_NOMBRE');
     this.pages = [
-      paginaUno, paginaDos
+      paginaUno, paginaDos, paginaRendiciones
     ]
 
   }
@@ -51,6 +53,7 @@ export class MyApp {
       var rolId = sessionStorage.getItem("ROL_ID");
       switch (page.title){
         case 'Inicio':
+        case 'Rendiciones':
           return true;
         case 'Usuarios':
           if (rolId == '1'){

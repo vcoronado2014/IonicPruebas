@@ -10,9 +10,11 @@ import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
 import { LoginPage } from '../pages/login/login';
 import { UsuariosPage } from '../pages/usuarios/usuarios';
+import { RendicionesPage } from '../pages/rendiciones/rendiciones';
 
 import { AuthService } from '../app/services/AuthService';
 import { NgCalendarModule } from 'ionic2-calendar';
+import {DetailRendicionPage} from "../pages/detail-rendicion/detail-rendicion";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     DetailsPage,
     LoginPage,
-    UsuariosPage
+    UsuariosPage,
+    RendicionesPage,
+    DetailRendicionPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,9 @@ import { NgCalendarModule } from 'ionic2-calendar';
     HomePage,
     DetailsPage,
     LoginPage,
-    UsuariosPage
+    UsuariosPage,
+    RendicionesPage,
+    DetailRendicionPage
   ],
   providers: [
     StatusBar,
