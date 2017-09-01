@@ -47,16 +47,30 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+  //ESTO MUESTRA O NO MUESTRA LOS ACCESOS DEL MENU
   visibleRol(page){
-    if (sessionStorage.getItem("ROL_ID"))
+    //antes hay que evaluar si tiene rol de institución
+    var rolInstitucionId = sessionStorage.getItem("ROL_ID_INSTITUCION");
+    var rolIdNormal = sessionStorage.getItem("ROL_ID");
+    var rolId = 0;
+    if (parseInt(rolInstitucionId) > 0)
+      rolId = parseInt(rolInstitucionId);
+    else
+      rolId = parseInt(rolIdNormal);
+
+    //si tiene rol de institucion es ese el elemento que hay que evaluar
+    //de lo contrario se evalua el rolId
+
+
+    if (rolId > 0)
     {
-      var rolId = sessionStorage.getItem("ROL_ID");
+      //var rolId = sessionStorage.getItem("ROL_ID");
       switch (page.title){
         case 'Inicio':
         case 'Rendiciones':
           return true;
         case 'Usuarios':
-          if (rolId == '1'){
+          if (rolId == 1){
             return true;
           }
           else {

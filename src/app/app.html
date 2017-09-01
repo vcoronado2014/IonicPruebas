@@ -39,12 +39,20 @@
       </ion-item>
       -->
     </ion-col>
+    <ion-row *ngFor="let p of pages" (click)="openPage(p)">
+      <ion-list ion-item *ngIf="visibleRol(p)" style="padding: 0; margin: 0; padding-left: 10px;">
 
-    <ion-list ion-item *ngFor="let p of pages" (click)="openPage(p)">
-      <button menuClose  *ngIf="visibleRol(p)" style="background-color: transparent;">
-        {{p.title}}
-      </button>
-    </ion-list>
+        <button menuClose  style="background-color: transparent; width: 100%; text-align: left;">
+          {{p.title}}
+        </button>
+      </ion-list>
+    </ion-row>
+
+    <!--<ion-list ion-item *ngFor="let p of pages" (click)="openPage(p)">-->
+      <!--<button menuClose  *ngIf="visibleRol(p)" style="background-color: transparent;">-->
+        <!--{{p.title}}-->
+      <!--</button>-->
+    <!--</ion-list>-->
   </ion-content>
 
 </ion-menu>

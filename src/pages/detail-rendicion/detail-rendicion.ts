@@ -3,8 +3,6 @@ import { NavController, NavParams, AlertController, ToastController } from 'ioni
 import { LoadingController } from 'ionic-angular';
 import { ConfigService } from '../../app/services/ConfigService';
 
-
-
 import { RendicionesPage } from '../../pages/rendiciones/rendiciones';
 /**
  * Generated class for the DetailRendicionPage page.

@@ -17,7 +17,7 @@
     <ion-row class="bg-green-pastel-6 fg-brown">
       <ion-col col-2>
       </ion-col>
-      <ion-col col-2 text-right>
+      <ion-col col-2 text-right *ngIf="config.puedeCrearUsuario(0)">
 
         <button ion-button class="bg-green-pastel-4">
           <ion-icon name="add" (click)="goToDetailsNuevo(0)"></ion-icon>
@@ -47,11 +47,9 @@
   <ion-fab top right edge>
     <button ion-fab mini (click)="logout()" color="dark"><ion-icon name="close"></ion-icon></button>
   </ion-fab>
-  <ion-card>
-    <ion-row item-start style="font-size: small; font-style: italic;" class="fg-gris">
-      <ion-icon name="help" style="font-size: small;"></ion-icon>&nbsp;Arratre el ítem a la derecha para ver las opciones
-    </ion-row>
-  </ion-card>
+  <ion-chip color="secondary">
+    <ion-label ><ion-icon name="help" style="font-size: small;"></ion-icon>&nbsp;Arratre el ítem a la derecha para ver las opciones</ion-label>
+  </ion-chip>
   <!-- listado de usuarios -->
   <ion-list>
 
@@ -64,15 +62,15 @@
 
       </ion-item>
       <ion-item-options side="left">
-        <button ion-button color="primary" (click)="goToDetails(item)" *ngIf="muestraBotonEliminar(item)">
+        <button ion-button color="primary" (click)="goToDetails(item)" *ngIf="muestraBotonEliminar(item) && config.verBotonModificarUsuario(0)">
           <ion-icon name="create"></ion-icon>
           <ion-label style="font-size: xx-small;" text-center>Editar</ion-label>
         </button>
-        <button ion-button color="danger" (click)="eliminarUsuario(item)" *ngIf="muestraBotonEliminar(item)">
+        <button ion-button color="danger" (click)="eliminarUsuario(item)" *ngIf="muestraBotonEliminar(item) && config.verBotonEliminarUsuario(0)">
           <ion-icon name="trash"></ion-icon>
           <ion-label style="font-size: xx-small;" text-center>Eliminar</ion-label>
         </button>
-        <button ion-button color="secondary" (click)="activarUsuario(item)" *ngIf="muestraBotonActivar(item)">
+        <button ion-button color="secondary" (click)="activarUsuario(item)" *ngIf="muestraBotonActivar(item) && config.verBotonActivarUsuario(0)">
           <ion-icon name="trash"></ion-icon>
           <ion-label style="font-size: xx-small;" text-center>Activar</ion-label>
         </button>

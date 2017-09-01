@@ -14,6 +14,9 @@ import { RendicionesPage } from '../pages/rendiciones/rendiciones';
 
 import { AuthService } from '../app/services/AuthService';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { ChartModule } from 'angular2-highcharts';
+import * as highcharts from 'Highcharts';
+
 import {DetailRendicionPage} from "../pages/detail-rendicion/detail-rendicion";
 
 @NgModule({
@@ -30,6 +33,7 @@ import {DetailRendicionPage} from "../pages/detail-rendicion/detail-rendicion";
     BrowserModule,
     HttpModule,
     NgCalendarModule,
+    ChartModule.forRoot(highcharts),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
