@@ -14,6 +14,10 @@
   </ion-navbar>
   <ion-toolbar>
     <ion-row style="background-color: white;">
+      <ion-col text-left>
+        <button ion-button color="danger" outline (click)="presentPrompt()" *ngIf="muestraBotonCambiarClave" > Agregar Archivo</button>
+      </ion-col>
+
       <ion-col text-right>
         <button ion-button color="primary" outline (click)="guardar()">Guardar</button>
       </ion-col>
@@ -24,4 +28,41 @@
 
 <ion-content padding>
 
+  <ion-list>
+    <!-- detalle -->
+    <ion-row>
+      <ion-item>
+        <ion-label floating><ion-icon name="information-circle"></ion-icon> Detalle</ion-label>
+        <ion-input name="txtDetalle" type="text" [(ngModel)]="Detalle"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating><ion-icon name="calendar"></ion-icon> Fecha</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"  [(ngModel)]="FechaRegistro"></ion-datetime>
+      </ion-item>
+
+      <!-- Tipo movimiento -->
+      <ion-item>
+        <ion-label floating><ion-icon name="globe"></ion-icon> Tipo Movimiento</ion-label>
+        <ion-select [(ngModel)]="TpmId">
+          <ion-option *ngFor="let tpm of dataTipoMovimiento" [value]="tpm.Id">{{ tpm.Nombre }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!--
+      <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+      -->
+      <ion-item>
+        <ion-label floating><ion-icon name="logo-usd"></ion-icon> Monto</ion-label>
+        <ion-input name="txtMonto" type="number" [(ngModel)]="Monto"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating><ion-icon name="folder-open"></ion-icon> Número Comprobante</ion-label>
+        <ion-input name="txtNumeroComprobante" type="text" [(ngModel)]="NumeroComprobante"></ion-input>
+      </ion-item>
+
+    </ion-row>
+
+  </ion-list>
 </ion-content>
